@@ -76,7 +76,7 @@ class UserControllerTest {
 
     @Test
     void testFindAllUsersSuccess() throws Exception {
-        // Given. Arrange inputs and targets. Define the behavior of Mock object userService.
+        // Given
         given(this.userService.findAll()).willReturn(this.users);
 
         // When and then
@@ -93,7 +93,7 @@ class UserControllerTest {
 
     @Test
     void testFindUserByIdSuccess() throws Exception {
-        // Given. Arrange inputs and targets. Define the behavior of Mock object userService.
+        // Given
         given(this.userService.findById(2)).willReturn(this.users.get(1));
 
         // When and then
@@ -107,7 +107,7 @@ class UserControllerTest {
 
     @Test
     void testFindUserByIdNotFound() throws Exception {
-        // Given. Arrange inputs and targets. Define the behavior of Mock object userService.
+        // Given
         given(this.userService.findById(5)).willThrow(new ObjectNotFoundException("user", 5));
 
         // When and then
@@ -125,13 +125,13 @@ class UserControllerTest {
         user.setUsername("lily");
         user.setPassword("123456");
         user.setEnabled(true);
-        user.setRoles("admin user"); // The delimiter is space.
+        user.setRoles("admin user");
 
         String json = this.objectMapper.writeValueAsString(user);
 
         user.setId(4);
 
-        // Given. Arrange inputs and targets. Define the behavior of Mock object userService.
+        // Given
         given(this.userService.save(Mockito.any(HogwartsUser.class))).willReturn(user);
 
         // When and then
@@ -151,13 +151,13 @@ class UserControllerTest {
 
         HogwartsUser updatedUser = new HogwartsUser();
         updatedUser.setId(3);
-        updatedUser.setUsername("tom123"); // Username is changed. It was tom.
+        updatedUser.setUsername("tom123");
         updatedUser.setEnabled(false);
         updatedUser.setRoles("user");
 
         String json = this.objectMapper.writeValueAsString(userDto);
 
-        // Given. Arrange inputs and targets. Define the behavior of Mock object userService.
+        // Given
         given(this.userService.update(eq(3), Mockito.any(HogwartsUser.class))).willReturn(updatedUser);
 
         // When and then
@@ -173,7 +173,7 @@ class UserControllerTest {
 
     @Test
     void testUpdateUserErrorWithNonExistentId() throws Exception {
-        // Given. Arrange inputs and targets. Define the behavior of Mock object userService.
+        // Given
         given(this.userService.update(eq(5), Mockito.any(HogwartsUser.class))).willThrow(new ObjectNotFoundException("user", 5));
 
         UserDto userDto = new UserDto(5, "tom123", false, "user");
@@ -190,7 +190,7 @@ class UserControllerTest {
 
     @Test
     void testDeleteUserSuccess() throws Exception {
-        // Given. Arrange inputs and targets. Define the behavior of Mock object userService.
+        // Given
         doNothing().when(this.userService).delete(2);
 
         // When and then
@@ -202,7 +202,7 @@ class UserControllerTest {
 
     @Test
     void testDeleteUserErrorWithNonExistentId() throws Exception {
-        // Given. Arrange inputs and targets. Define the behavior of Mock object userService.
+        // Given
         doThrow(new ObjectNotFoundException("user", 5)).when(this.userService).delete(5);
 
         // When and then
